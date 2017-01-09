@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { BarChart, XAxis, YAxis, Bar, CartesianGrid, Tooltip, Legend } from 'recharts'
+import ReactHighcharts from 'react-highcharts'
 
 const MaxPoints = ({ tournament }) => {
   const data = tournament.participants
@@ -39,15 +39,40 @@ const MaxPoints = ({ tournament }) => {
       return 0
     })
 
-  return <BarChart data={data} width={600} height={500} layout="vertical">
-    <XAxis type="number" />
-    <YAxis dataKey="name" type="category" />
-    <CartesianGrid strokeDasharray="3 3"/>
-    <Tooltip />
-    <Legend />
-    <Bar dataKey="pointsLeft" stackId="a" fill="#82ca9d" />
-    <Bar dataKey="points" stackId="a" fill="#8884d8" />
-  </BarChart>
+  const config = {
+    chart: {
+      type: 'bar'
+    },
+    title: {
+      text: 'Current points vs Max possible points'
+    },
+    xAxis: {
+      categories: data.map(d => d.name)
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: 'Points'
+      }
+    },
+    legend: {
+      reversed: true
+    },
+    plotOptions: {
+      series: {
+        stacking: 'normal'
+      }
+    },
+    series: [{
+      name: 'Points left',
+      data: data.map(d => d.pointsLeft)
+    }, {
+      name: 'Points',
+      data: data.map(d => d.points)
+    }]
+  }
+
+  return <ReactHighcharts config={config} />
 }
 
 MaxPoints.propTypes = {
