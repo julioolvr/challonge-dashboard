@@ -5,23 +5,22 @@ function tournamentKeyFromUrl(url) {
   return org ? `${org}-${tournamentName}` : tournamentName
 }
 
-const STORAGE_API_KEY = 'challongeApiKey'
-
 class TournamentSelector extends Component {
   constructor(props) {
     super(props)
+
+    if (!process.env.REACT_APP_CHALLONGE_API_KEY) {
+      throw new Error('Please set a .env file in your root and set REACT_APP_CHALLONGE_API_KEY')
+    }
+
     this.state = {
       tournamentUrl: '',
-      apiKey: localStorage.getItem(STORAGE_API_KEY) || ''
+      apiKey: process.env.REACT_APP_CHALLONGE_API_KEY
     }
   }
 
   onTournamentUrlChange(e) {
     this.setState({ tournamentUrl: e.target.value })
-  }
-
-  onApiKeyChange(e) {
-    this.setState({ apiKey: e.target.value })
   }
 
   onFetchClick() {
@@ -32,7 +31,6 @@ class TournamentSelector extends Component {
       .then(r => r.json())
       .then(response => response.tournament)
       .then(tournament => this.props.onTournamentSelected(tournament))
-      .then(() => localStorage.setItem(STORAGE_API_KEY, apiKey))
   }
 
   render() {
@@ -44,12 +42,6 @@ class TournamentSelector extends Component {
           type="text"
           value={this.state.tournamentUrl}
           onChange={ e => this.onTournamentUrlChange(e) } />
-        <label htmlFor="api-key">API Key:</label>
-        <input
-          id="api-key"
-          type="text"
-          value={this.state.apiKey}
-          onChange={ e => this.onApiKeyChange(e) } />
         <button onClick={ () => this.onFetchClick() }>Fetch</button>
       </div>
     )
