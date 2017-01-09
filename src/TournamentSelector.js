@@ -5,7 +5,17 @@ function tournamentKeyFromUrl(url) {
   return org ? `${org}-${tournamentName}` : tournamentName
 }
 
+const STORAGE_API_KEY = 'challongeApiKey'
+
 class TournamentSelector extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      tournamentUrl: '',
+      apiKey: localStorage.getItem(STORAGE_API_KEY) || ''
+    }
+  }
+
   onTournamentUrlChange(e) {
     this.setState({ tournamentUrl: e.target.value })
   }
@@ -22,15 +32,24 @@ class TournamentSelector extends Component {
       .then(r => r.json())
       .then(response => response.tournament)
       .then(tournament => this.props.onTournamentSelected(tournament))
+      .then(() => localStorage.setItem(STORAGE_API_KEY, apiKey))
   }
 
   render() {
     return (
       <div>
         <label htmlFor="tournament-url">Tournament URL:</label>
-        <input id="tournament-url" type="text" onChange={ e => this.onTournamentUrlChange(e) } />
+        <input
+          id="tournament-url"
+          type="text"
+          value={this.state.tournamentUrl}
+          onChange={ e => this.onTournamentUrlChange(e) } />
         <label htmlFor="api-key">API Key:</label>
-        <input id="api-key" type="password" onChange={ e => this.onApiKeyChange(e) } />
+        <input
+          id="api-key"
+          type="text"
+          value={this.state.apiKey}
+          onChange={ e => this.onApiKeyChange(e) } />
         <button onClick={ () => this.onFetchClick() }>Fetch</button>
       </div>
     )
