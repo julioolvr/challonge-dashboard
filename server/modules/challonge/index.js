@@ -30,7 +30,7 @@ const parseTournament = ({ tournament }) => {
     id: tournament.id,
     name: tournament.name,
     progress: tournament.progress_meter,
-    ChallongeURL: tournament.full_challonge_url,
+    challongeURL: tournament.full_challonge_url,
     players,
     matches
   }
