@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
-import './App.css'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import injectTapEventPlugin from 'react-tap-event-plugin'
 
+import './App.css'
 import TournamentSelector from './TournamentSelector'
 import Dashboard from './Dashboard'
+
+injectTapEventPlugin()
 
 class App extends Component {
   constructor(props) {
@@ -17,11 +21,17 @@ class App extends Component {
   render() {
     return (
       <div>
-        <TournamentSelector onTournamentSelected={ tournament => this.onTournamentSelected(tournament) }/>
+        <header>
+          <TournamentSelector onTournamentSelected={ tournament => this.onTournamentSelected(tournament) }/>
+        </header>
         <Dashboard tournament={this.state.tournament} />
       </div>
     )
   }
 }
 
-export default App
+export default () => {
+  return <MuiThemeProvider>
+    <App />
+  </MuiThemeProvider>
+}
