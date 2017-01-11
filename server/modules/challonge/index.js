@@ -1,5 +1,5 @@
 const fetch = require('isomorphic-fetch')
-const { apiKey, baseURL } = require('./constants')
+const { apiKey, baseURL, subdomain } = require('./constants')
 
 const parsePlayers = ({ participants }) => participants.map(parsePlayer)
 const parsePlayer = ({ participant }) => ({
@@ -37,7 +37,7 @@ const parseTournament = ({ tournament }) => {
 }
 
 const getTournaments = () => (
-  fetch(`${baseURL}/tournaments.json?api_key=${apiKey}&subdomain=scv`)
+  fetch(`${baseURL}/tournaments.json?api_key=${apiKey}&subdomain=${subdomain}`)
     .then(response => response.json())
     .then(tournaments => tournaments.map(parseTournament))
 )
