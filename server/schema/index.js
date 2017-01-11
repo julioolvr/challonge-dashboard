@@ -3,7 +3,7 @@ type Tournament {
   id: ID!
   name: String!
   progress: Int
-  ChallongeURL: String
+  challongeURL: String
   players: [Player]
   matches: [Match]
 }
