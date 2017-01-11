@@ -7,8 +7,7 @@ const parsePlayer = ({ participant }) => ({
   name: participant.name
 })
 
-const parseMatches = ({ matches, participants }) => matches.map(parseMatch)
-const parseMatch = ({ match }) => {
+const parseMatches = ({ matches, participants }) => matches.map(({ match }) => {
   const [scoreP1, scoreP2] = match.scores_csv.split('-')
   const played = match.state === 'complete'
   return {
@@ -21,7 +20,7 @@ const parseMatch = ({ match }) => {
       winnerId: match.winner_id
     } : null
   }
-}
+})
 
 const parseTournament = ({ tournament }) => {
   const players = tournament.participants ? parsePlayers(tournament) : null
