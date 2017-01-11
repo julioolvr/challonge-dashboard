@@ -11,11 +11,13 @@ injectTapEventPlugin()
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      selectedTournament: null
+    }
   }
 
-  onTournamentSelected(tournament) {
-    this.setState({ tournament })
+  onTournamentSelected(selectedTournament) {
+    this.setState({ selectedTournament })
   }
 
   render() {
@@ -24,7 +26,7 @@ class App extends Component {
         <header>
           <TournamentSelector onTournamentSelected={ tournament => this.onTournamentSelected(tournament) }/>
         </header>
-        <Dashboard tournament={this.state.tournament} />
+        <Dashboard selectedTournament={this.state.selectedTournament} />
       </div>
     )
   }

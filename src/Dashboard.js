@@ -1,40 +1,23 @@
 import React, { PropTypes } from 'react'
 import { GridList, GridTile } from 'material-ui/GridList'
-
 import MaxPoints from './charts/MaxPoints'
 
 const Dashboard = props => {
-  if (!props.tournament) {
-    return <div>Select a tournament</div>
+  if (!props.selectedTournament) {
+    return <div style={{textAlign: 'center', marginTop: '10px'}}>Select a tournament 👆</div>
   }
 
   return (
-    <GridList
-      cellHeight={360}>
+    <GridList cellHeight={360}>
       <GridTile>
-        <MaxPoints tournament={props.tournament}/>
-      </GridTile>
-      <GridTile>
-        <MaxPoints tournament={props.tournament}/>
-      </GridTile>
-      <GridTile>
-        <MaxPoints tournament={props.tournament}/>
-      </GridTile>
-      <GridTile>
-        <MaxPoints tournament={props.tournament}/>
-      </GridTile>
-      <GridTile>
-        <MaxPoints tournament={props.tournament}/>
-      </GridTile>
-      <GridTile>
-        <MaxPoints tournament={props.tournament}/>
+        <MaxPoints tournamentId={props.selectedTournament}/>
       </GridTile>
     </GridList>
   )
 }
 
 Dashboard.propTypes = {
-  tournament: PropTypes.object
+  selectedTournament: PropTypes.int
 }
 
 export default Dashboard

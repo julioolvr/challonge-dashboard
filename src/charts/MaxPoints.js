@@ -1,24 +1,34 @@
 import React, { PropTypes } from 'react'
 import ReactHighcharts from 'react-highcharts'
+import { graphql } from 'react-apollo';
+import CircularProgress from 'material-ui/CircularProgress';
+import gql from 'graphql-tag';
 
-const MaxPoints = ({ tournament }) => {
-  const data = tournament.participants
-    .map(({ participant }) => {
-      const matches = tournament.matches.filter(({ match }) => {
-        return match.player1_id === participant.id || match.player2_id === participant.id
+const MaxPoints = (props) => {
+  if (props.data.loading) return (
+    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '300px'}}>
+      <CircularProgress />
+    </div>
+  )
+
+  const { tournament } = props.data
+  const data = tournament.players
+    .map((player) => {
+      const matches = tournament.matches.filter((match) => {
+        return match.player1.id === player.id || match.player2.id === player.id
       })
 
-      const matchesWon = matches.filter(({ match }) => match.winner_id === participant.id).length
-      const matchesTied = matches.filter(({ match }) => match.state === 'complete' && !match.winner_id).length
-      const matchesLeft = matches.filter(({ match }) => match.state === 'open').length
+      const matchesWon = matches.filter((match) => match.score && match.score.winnerId === player.id).length
+      const matchesTied = matches.filter((match) => match.played && match.score && !match.score.winnerId).length
+      const matchesLeft = matches.filter((match) => !match.score).length
 
-      const points = matchesWon * Number(tournament.rr_pts_for_match_win)
-        + matchesTied * Number(tournament.rr_pts_for_match_tie)
+      const points = matchesWon * 3
+        + matchesTied * 1
 
-      const pointsLeft = matchesLeft * Number(tournament.rr_pts_for_match_win)
+      const pointsLeft = matchesLeft * 3
 
       return {
-        name: participant.name,
+        name: player.name,
         points,
         pointsLeft
       }
@@ -79,4 +89,29 @@ MaxPoints.propTypes = {
   tournament: PropTypes.object
 }
 
-export default MaxPoints
+const Query = gql`
+  query Query($tournamentId: Int!) {
+    tournament(id: $tournamentId) {
+      players {
+        id
+        name
+      }
+      matches {
+        player1 {
+          id
+          name
+        }
+        player2 {
+          id
+          name
+        }
+        score {
+          winnerId
+        }
+        played
+      }
+    }
+  }
+`
+
+export default graphql(Query)(MaxPoints)
