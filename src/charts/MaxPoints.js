@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
 import ReactHighcharts from 'react-highcharts'
-import { graphql } from 'react-apollo';
 import CircularProgress from 'material-ui/CircularProgress';
+import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { wonMatches, tiedMatches, unplayedMatches, matchesForPlayer } from '../util/stats'
 
 const MaxPoints = (props) => {
   if (props.data.loading) return (
@@ -14,13 +15,11 @@ const MaxPoints = (props) => {
   const { tournament } = props.data
   const data = tournament.players
     .map((player) => {
-      const matches = tournament.matches.filter((match) => {
-        return match.player1.id === player.id || match.player2.id === player.id
-      })
+      const matches = matchesForPlayer(player.id, tournament)
 
-      const matchesWon = matches.filter((match) => match.score && match.score.winnerId === player.id).length
-      const matchesTied = matches.filter((match) => match.played && match.score && !match.score.winnerId).length
-      const matchesLeft = matches.filter((match) => !match.score).length
+      const matchesWon = wonMatches(player.id, matches).length
+      const matchesTied = tiedMatches(matches).length
+      const matchesLeft = unplayedMatches(matches).length
 
       const points = matchesWon * 3
         + matchesTied * 1
