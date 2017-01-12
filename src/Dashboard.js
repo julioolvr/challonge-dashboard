@@ -17,7 +17,7 @@ const Dashboard = props => {
 }
 
 Dashboard.propTypes = {
-  selectedTournament: PropTypes.int
+  selectedTournament: PropTypes.number
 }
 
 export default Dashboard
