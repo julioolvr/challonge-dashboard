@@ -17,16 +17,16 @@ const parseMatches = ({ matches, participants }) => matches.map(({ match }) => {
     player1,
     player2,
     played,
-    score: played ? {
+    score: {
       players: [{
         player: player1,
-        score: scoreP1
+        score: Number(scoreP1)
       },{
         player: player2,
-        score: scoreP2
+        score: Number(scoreP2)
       }],
       winnerId: match.winner_id
-    } : null
+    }
   }
 })
 
