@@ -3,7 +3,8 @@ import {
   wonMatches,
   lostMatches,
   tiedMatches,
-  unplayedMatches
+  unplayedMatches,
+  goalsAgainst
 } from './stats.js'
 
 const matchesForPlayer = [
@@ -88,6 +89,16 @@ describe('goalsMade', () => {
   });
   it('returns 0 when no matches are passed', () => {
     expect(goalsMade(2, [])).toEqual(0)
+  })
+})
+
+describe('goalsAgainst', () => {
+  it('returns the sum of goals received by a player', () => {
+    expect(goalsAgainst(1, matchesForPlayer)).toEqual(9)
+    expect(goalsAgainst(2, matchesForPlayer)).toEqual(7)
+  });
+  it('returns 0 when no matches are passed', () => {
+    expect(goalsAgainst(2, [])).toEqual(0)
   })
 })
 
