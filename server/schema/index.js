@@ -32,6 +32,6 @@ type PlayerScore {
 
 type Query {
   tournaments: [Tournament]
-  tournament(id: Int!): Tournament
+  tournament(id: ID!): Tournament
 }
 `

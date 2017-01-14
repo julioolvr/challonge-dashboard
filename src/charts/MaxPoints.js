@@ -89,7 +89,7 @@ MaxPoints.propTypes = {
 }
 
 const Query = gql`
-  query Query($tournamentId: Int!) {
+  query Query($tournamentId: ID!) {
     tournament(id: $tournamentId) {
       players {
         id
