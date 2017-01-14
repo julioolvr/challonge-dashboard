@@ -9,13 +9,20 @@ export const wonMatches = (playerId, matchesForPlayer) => (
 )
 
 export const lostMatches = (playerId, matchesForPlayer) => (
-  matchesForPlayer.filter((match) => match.score && match.score.winnerId != playerId)
+  matchesForPlayer.filter((match) => match.score.winnerId && match.score.winnerId !== playerId)
 )
 
 export const unplayedMatches = (matchesForPlayer) => (
-  matchesForPlayer.filter((match) => !match.score)
+  matchesForPlayer.filter((match) => !match.played)
 )
 
 export const tiedMatches = (matchesForPlayer) => (
   matchesForPlayer.filter((match) => match.played && match.score && !match.score.winnerId)
+)
+
+export const goalsMade = (playerId, matchesForPlayer) => (
+  matchesForPlayer.filter(m => Boolean(m.played)).reduce((goals, match) => {
+    const goalsMadeInMatch = match.score.players.find(p => p.player.id === playerId).score
+    return goals + goalsMadeInMatch
+  }, 0)
 )
