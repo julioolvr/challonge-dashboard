@@ -7,7 +7,6 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui/Table';
-import Spinner from '../components/Spinner';
 import {
   wonMatches,
   tiedMatches,
@@ -16,13 +15,10 @@ import {
   goalsMade,
   goalsAgainst
 } from '../util/stats'
-import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const Table = (props) => {
-  if (props.data.loading) return <Spinner height="400px"/>
-
-  const { tournament } = props.data
+  const { tournament } = props
   return (
     <MUITable selectable={false} height={'400px'} fixedHeader={true}>
       <TableHeader
@@ -85,9 +81,9 @@ const Table = (props) => {
   )
 }
 
-const Query = gql`
-  query Query($tournamentId: ID!) {
-    tournament(id: $tournamentId) {
+Table.fragments = {
+  tournament: gql`
+    fragment Table on Tournament {
       players {
         id
         name
@@ -112,7 +108,7 @@ const Query = gql`
         played
       }
     }
-  }
-`
+  `
+}
 
-export default graphql(Query)(Table)
+export default Table

@@ -1,14 +1,10 @@
 import React, { PropTypes } from 'react'
 import ReactHighcharts from 'react-highcharts'
-import Spinner from '../components/Spinner';
-import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { wonMatches, tiedMatches, unplayedMatches, matchesForPlayer } from '../util/stats'
 
 const MaxPoints = (props) => {
-  if (props.data.loading) return <Spinner />
-
-  const { tournament } = props.data
+  const { tournament } = props
   const data = tournament.players
     .map((player) => {
       const matches = matchesForPlayer(player.id, tournament)
@@ -84,9 +80,9 @@ MaxPoints.propTypes = {
   tournament: PropTypes.object
 }
 
-const Query = gql`
-  query Query($tournamentId: ID!) {
-    tournament(id: $tournamentId) {
+MaxPoints.fragments = {
+  tournament: gql`
+    fragment MaxPoints on Tournament {
       players {
         id
         name
@@ -106,7 +102,7 @@ const Query = gql`
         played
       }
     }
-  }
-`
+  `
+}
 
-export default graphql(Query)(MaxPoints)
+export default MaxPoints
