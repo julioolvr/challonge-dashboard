@@ -1,16 +1,12 @@
 import React, { PropTypes } from 'react'
 import ReactHighcharts from 'react-highcharts'
-import CircularProgress from 'material-ui/CircularProgress';
+import Spinner from '../components/Spinner';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { wonMatches, tiedMatches, unplayedMatches, matchesForPlayer } from '../util/stats'
 
 const MaxPoints = (props) => {
-  if (props.data.loading) return (
-    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '300px'}}>
-      <CircularProgress />
-    </div>
-  )
+  if (props.data.loading) return <Spinner />
 
   const { tournament } = props.data
   const data = tournament.players
