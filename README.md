@@ -5,10 +5,10 @@
 2. Rename `.env.example` to `.env` and fill `CHALLONGE_API_KEY`
 
 ### Starting the server
-`npm run serve` will start the GraphQL server in the port `6678`, overridable with the `SERVER_PORT` environment variable
+`npm start` will start the GraphQL server in the port `6678`, overridable with the `SERVER_PORT` environment variable
 
 ### Starting the client
-`npm start`
+`npm run client:start`
 
 ---
 
