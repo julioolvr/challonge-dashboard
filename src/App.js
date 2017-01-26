@@ -26,7 +26,7 @@ class App extends Component {
         <header>
           <TournamentSelector onTournamentSelected={ tournament => this.onTournamentSelected(tournament) }/>
         </header>
-        <Dashboard tournamentId={this.state.selectedTournament} />
+        <Dashboard selectedTournament={this.state.selectedTournament} />
       </div>
     )
   }
