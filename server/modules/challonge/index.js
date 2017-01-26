@@ -10,15 +10,23 @@ const parsePlayer = ({ participant }) => ({
 const parseMatches = ({ matches, participants }) => matches.map(({ match }) => {
   const [scoreP1, scoreP2] = match.scores_csv.split('-')
   const played = match.state === 'complete'
+  const player1 = parsePlayer(participants.find(p => p.participant.id === match.player1_id))
+  const player2 = parsePlayer(participants.find(p => p.participant.id === match.player2_id))
+
   return {
-    player1: parsePlayer(participants.find(p => p.participant.id === match.player1_id)),
-    player2: parsePlayer(participants.find(p => p.participant.id === match.player2_id)),
+    player1,
+    player2,
     played,
-    score: played ? {
-      player1: scoreP1,
-      player2: scoreP2,
+    score: {
+      players: [{
+        player: player1,
+        score: Number(scoreP1)
+      },{
+        player: player2,
+        score: Number(scoreP2)
+      }],
       winnerId: match.winner_id
-    } : null
+    }
   }
 })
 

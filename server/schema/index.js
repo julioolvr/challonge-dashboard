@@ -21,13 +21,17 @@ type Match {
 }
 
 type MatchScore {
-  player1: Int!
-  player2: Int!
+  players: [PlayerScore]
   winnerId: ID
+}
+
+type PlayerScore {
+  player: Player
+  score: Int
 }
 
 type Query {
   tournaments: [Tournament]
-  tournament(id: Int!): Tournament
+  tournament(id: ID!): Tournament
 }
 `
