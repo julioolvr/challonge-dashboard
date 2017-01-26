@@ -5,8 +5,10 @@ import './index.css';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:6678/graphql';
+
 const client = new ApolloClient({
-  networkInterface: createNetworkInterface({ uri: 'http://localhost:6678/graphql' }),
+  networkInterface: createNetworkInterface({ uri: backendUrl }),
 });
 
 ReactDOM.render(
