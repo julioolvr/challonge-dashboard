@@ -17,10 +17,40 @@ import {
 } from '../util/stats'
 import gql from 'graphql-tag';
 
+
+const completedPlayer = (tournament) => tournament.players.map(p => {
+    const matches = matchesForPlayer(p.id, tournament)
+    const baseObject = {
+      ...p,
+      matches,
+      wonMatches: wonMatches(p.id, matches).length,
+      lostMatches: lostMatches(p.id, matches).length,
+      tiedMatches: tiedMatches(matches).length,
+      goalsMade: goalsMade(p.id, matches),
+      goalsAgainst: goalsAgainst(p.id, matches),
+    }
+    return {
+      ...baseObject,
+      matchesPlayed: baseObject.wonMatches + baseObject.lostMatches + baseObject.tiedMatches,
+      goalsDiff: baseObject.goalsMade - baseObject.goalsAgainst,
+      avgPoints: ((baseObject.wonMatches / (tournament.players.length - 1)) * 3).toFixed(2)
+    }
+  }).sort((a, b) => {
+    if (a.wonMatches > b.wonMatches) return -1
+    if (a.wonMatches < b.wonMatches) return 1
+    if (b.wonMatches > a.wonMatches) return -1
+    if (b.wonMatches < a.wonMatches) return 1
+    return 0
+  })
+
 const Table = (props) => {
   const { tournament } = props
+  const players = completedPlayer(tournament)
+
+  const onPlayerSelected = (indexes) => props.onPlayerSelected(indexes[0] && players[indexes[0]].id)
+
   return (
-    <MUITable selectable={false} height={'400px'} fixedHeader={true}>
+    <MUITable selectable={true} height={'400px'} fixedHeader={true} onRowSelection={onPlayerSelected}>
       <TableHeader
         displaySelectAll={false}
         adjustForCheckbox={false}
@@ -39,30 +69,7 @@ const Table = (props) => {
         </TableRow>
       </TableHeader>
       <TableBody displayRowCheckbox={false} stripedRows={true}>
-        {tournament.players.map(p => {
-          const matches = matchesForPlayer(p.id, tournament)
-          const baseObject = {
-            ...p,
-            matches,
-            wonMatches: wonMatches(p.id, matches).length,
-            lostMatches: lostMatches(p.id, matches).length,
-            tiedMatches: tiedMatches(matches).length,
-            goalsMade: goalsMade(p.id, matches),
-            goalsAgainst: goalsAgainst(p.id, matches),
-          }
-          return {
-            ...baseObject,
-            matchesPlayed: baseObject.wonMatches + baseObject.lostMatches + baseObject.tiedMatches,
-            goalsDiff: baseObject.goalsMade - baseObject.goalsAgainst,
-            avgPoints: ((baseObject.wonMatches / (tournament.players.length - 1)) * 3).toFixed(2)
-          }
-        }).sort((a, b) => {
-          if (a.wonMatches > b.wonMatches) return -1
-          if (a.wonMatches < b.wonMatches) return 1
-          if (b.wonMatches > a.wonMatches) return -1
-          if (b.wonMatches < a.wonMatches) return 1
-          return 0
-        }).map(p => (
+        {players.map(p => (
           <TableRow key={p.id}>
             <TableRowColumn>{p.name}</TableRowColumn>
             <TableRowColumn>{p.wonMatches * 3}</TableRowColumn>

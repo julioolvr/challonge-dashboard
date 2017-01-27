@@ -21,12 +21,16 @@ class App extends Component {
   }
 
   render() {
+    const onPlayerSelected = (playerId) => {
+      this.setState({selectedPlayerId: playerId})
+    }
+
     return (
       <div>
         <header>
           <TournamentSelector onTournamentSelected={ tournament => this.onTournamentSelected(tournament) }/>
         </header>
-        <Dashboard tournamentId={this.state.selectedTournament} />
+        <Dashboard tournamentId={this.state.selectedTournament} onPlayerSelected={onPlayerSelected} selectedPlayerId={this.state.selectedPlayerId}/>
       </div>
     )
   }

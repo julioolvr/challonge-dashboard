@@ -20,10 +20,11 @@ export const tiedMatches = (matchesForPlayer) => (
   matchesForPlayer.filter((match) => match.played && match.score && !match.score.winnerId)
 )
 
+export const goalsMadeInMatch = (match, playerId) => match.played && match.score.players.find(p => p.player.id === playerId).score
+
 export const goalsMade = (playerId, matchesForPlayer) => (
   matchesForPlayer.filter(m => Boolean(m.played)).reduce((goals, match) => {
-    const goalsMadeInMatch = match.score.players.find(p => p.player.id === playerId).score
-    return goals + goalsMadeInMatch
+    return goals + goalsMadeInMatch(match, playerId)
   }, 0)
 )
 
