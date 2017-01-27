@@ -47,7 +47,7 @@ const Table = (props) => {
   const { tournament } = props
   const players = completedPlayer(tournament)
 
-  const onPlayerSelected = (indexes) => props.onPlayerSelected(indexes[0] && players[indexes[0]].id)
+  const onPlayerSelected = (indexes) => props.onPlayerSelected(typeof(indexes[0]) !== 'undefined' && players[indexes[0]].id)
 
   return (
     <MUITable selectable={true} height={'400px'} fixedHeader={true} onRowSelection={onPlayerSelected}>
