@@ -70,7 +70,7 @@ const Table = (props) => {
       </TableHeader>
       <TableBody displayRowCheckbox={false} stripedRows={true}>
         {players.map(p => (
-          <TableRow key={p.id}>
+          <TableRow key={p.id} style={{cursor:'pointer'}}>
             <TableRowColumn>{p.name}</TableRowColumn>
             <TableRowColumn>{p.wonMatches * 3}</TableRowColumn>
             <TableRowColumn>{p.matchesPlayed}</TableRowColumn>
