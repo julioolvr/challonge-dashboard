@@ -4,12 +4,16 @@ export const matchesForPlayer = (playerId, tournament) => (
   })
 )
 
+export const hasWonMatch = (playerId, match) => match.score && match.score.winnerId === playerId
+
+export const hasLostMatch = (playerId, match) => match.score && match.score.winnerId && match.score.winnerId !== playerId
+
 export const wonMatches = (playerId, matchesForPlayer) => (
-  matchesForPlayer.filter((match) => match.score && match.score.winnerId === playerId)
+  matchesForPlayer.filter((match) => hasWonMatch(playerId, match))
 )
 
 export const lostMatches = (playerId, matchesForPlayer) => (
-  matchesForPlayer.filter((match) => match.score.winnerId && match.score.winnerId !== playerId)
+  matchesForPlayer.filter((match) => hasLostMatch(playerId, match))
 )
 
 export const unplayedMatches = (matchesForPlayer) => (
