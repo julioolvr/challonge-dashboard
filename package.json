@@ -4,7 +4,10 @@
   "private": true,
   "devDependencies": {
     "nodemon": "^1.11.0",
-    "react-scripts": "0.8.4"
+    "react-scripts": "0.8.4",
+    "shipit": "^1.0.2",
+    "shipit-cli": "^2.0.0",
+    "shipit-deploy": "^2.4.0"
   },
   "dependencies": {
     "apollo-client": "^0.7.1",
@@ -30,7 +33,8 @@
     "client:start": "react-scripts start",
     "client:build": "react-scripts build",
     "client:test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy:prod": "shipit prod deploy"
   },
   "proxy": "https://api.challonge.com/v1",
   "engineStrict": true,
