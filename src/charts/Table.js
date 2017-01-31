@@ -32,6 +32,7 @@ const completedPlayer = (tournament) => tournament.players.map(p => {
     return {
       ...baseObject,
       matchesPlayed: baseObject.wonMatches + baseObject.lostMatches + baseObject.tiedMatches,
+      points: baseObject.wonMatches * 3 + baseObject.tiedMatches,
       goalsDiff: baseObject.goalsMade - baseObject.goalsAgainst,
       avgPoints: ((baseObject.wonMatches / (tournament.players.length - 1)) * 3).toFixed(2)
     }
@@ -72,7 +73,7 @@ const Table = (props) => {
         {players.map(p => (
           <TableRow key={p.id} style={{cursor:'pointer'}}>
             <TableRowColumn>{p.name}</TableRowColumn>
-            <TableRowColumn>{p.wonMatches * 3}</TableRowColumn>
+            <TableRowColumn>{p.points}</TableRowColumn>
             <TableRowColumn>{p.matchesPlayed}</TableRowColumn>
             <TableRowColumn>{p.wonMatches}</TableRowColumn>
             <TableRowColumn>{p.tiedMatches}</TableRowColumn>
