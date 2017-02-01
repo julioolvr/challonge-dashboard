@@ -3,6 +3,7 @@ node_js:
   - '6'
 
 before_install:
+  - echo -e "Host 192.241.223.201\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - openssl aes-256-cbc -K $encrypted_404ae8fbff51_key -iv $encrypted_404ae8fbff51_iv -in key.enc -out ~/.ssh/id_rsa -d
   - chmod 600 ~/.ssh/id_rsa
 
