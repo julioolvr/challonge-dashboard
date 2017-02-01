@@ -1,9 +1,9 @@
 language: node_js
 node_js:
-  - "6"
+  - '6'
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_6a5cf90fd664_key -iv $encrypted_6a5cf90fd664_iv -in key.enc -out ~/.ssh/id_rsa -d
+  - openssl aes-256-cbc -K $encrypted_404ae8fbff51_key -iv $encrypted_404ae8fbff51_iv -in key.enc -out ~/.ssh/id_rsa -d
   - chmod 600 ~/.ssh/id_rsa
 
 deploy:
