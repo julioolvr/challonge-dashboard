@@ -8,7 +8,7 @@ module.exports = shipit => {
     default: {
       workspace: localDeployDir,
       deployTo: './dashboard-deploys',
-      repositoryUrl: 'https://github.com/julioolvr/challonge-dashboard',
+      repositoryUrl: 'git@github.com:julioolvr/challonge-dashboard.git',
       ignores: ['.git', 'node_modules', '.env'],
       keepReleases: 5
     },
