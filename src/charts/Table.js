@@ -29,12 +29,14 @@ const completedPlayer = (tournament) => tournament.players.map(p => {
       goalsMade: goalsMade(p.id, matches),
       goalsAgainst: goalsAgainst(p.id, matches),
     }
+    const matchesPlayed = baseObject.wonMatches + baseObject.lostMatches + baseObject.tiedMatches
+
     return {
       ...baseObject,
-      matchesPlayed: baseObject.wonMatches + baseObject.lostMatches + baseObject.tiedMatches,
+      matchesPlayed,
       points: baseObject.wonMatches * 3 + baseObject.tiedMatches,
       goalsDiff: baseObject.goalsMade - baseObject.goalsAgainst,
-      avgPoints: ((baseObject.wonMatches / (tournament.players.length - 1)) * 3).toFixed(2)
+      avgPoints: ((baseObject.wonMatches / matchesPlayed) * 3).toFixed(2)
     }
   }).sort((a, b) => {
     if(b.points !== a.points)
