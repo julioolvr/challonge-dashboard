@@ -37,11 +37,9 @@ const completedPlayer = (tournament) => tournament.players.map(p => {
       avgPoints: ((baseObject.wonMatches / (tournament.players.length - 1)) * 3).toFixed(2)
     }
   }).sort((a, b) => {
-    if (a.wonMatches > b.wonMatches) return -1
-    if (a.wonMatches < b.wonMatches) return 1
-    if (b.wonMatches > a.wonMatches) return -1
-    if (b.wonMatches < a.wonMatches) return 1
-    return 0
+    if(b.points !== a.points)
+      return b.points - a.points
+    return b.goalsDiff - a.goalsDiff
   })
 
 const Table = (props) => {
