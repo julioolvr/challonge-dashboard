@@ -1,6 +1,7 @@
 module.exports = `
 type Tournament {
   id: ID!
+  type: String!
   name: String!
   progress: Int
   challongeURL: String
