@@ -8,5 +8,5 @@ const app = express()
 app.use(graphqlServer)
 
 app.listen(PORT, () => {
-  console.log(`GraphiQL en http://localhost:${PORT}/graphiql`)
+  console.log(`GraphiQL en http://localhost:${PORT}${process.env.SERVER_PATH}`)
 })

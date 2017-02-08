@@ -14,6 +14,6 @@ const schema = makeExecutableSchema({
 var app = express()
 
 app.use('/graphql', bodyParser.json(), cors(), graphqlExpress({ schema: schema }))
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
+app.use('/graphiql', graphiqlExpress({ endpointURL: process.env.SERVER_PATH }))
 
 module.exports = app
