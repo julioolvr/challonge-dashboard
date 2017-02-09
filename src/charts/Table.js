@@ -44,6 +44,7 @@ const completedPlayer = (tournament) => tournament.players.map(p => {
       return b.points - a.points
     return b.goalsDiff - a.goalsDiff
   })
+  .map( (p, index) => ({...p, position: index + 1 }))
 
 const Table = (props) => {
   const { tournament } = props
@@ -58,6 +59,7 @@ const Table = (props) => {
         adjustForCheckbox={false}
       >
         <TableRow>
+          <TableHeaderColumn>#</TableHeaderColumn>
           <TableHeaderColumn>Jugador</TableHeaderColumn>
           <TableHeaderColumn>PTS</TableHeaderColumn>
           <TableHeaderColumn>PJ</TableHeaderColumn>
@@ -73,6 +75,7 @@ const Table = (props) => {
       <TableBody displayRowCheckbox={false} stripedRows={true}>
         {players.map(p => (
           <TableRow key={p.id} style={{cursor:'pointer'}}>
+            <TableRowColumn>{p.position}</TableRowColumn>
             <TableRowColumn>{p.name}</TableRowColumn>
             <TableRowColumn>{p.points}</TableRowColumn>
             <TableRowColumn>{p.matchesPlayed}</TableRowColumn>
