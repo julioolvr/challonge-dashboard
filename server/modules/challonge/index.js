@@ -52,10 +52,10 @@ const convertTournamentType = (type) => {
   //    * round robin
   //    * swiss
   switch(type) {
-    case 'single elimination':  return 'single-elimination'
-    case 'double elimination':  return 'doule-elimination'
-    case 'round robin':         return 'league'
-    default:                    return 'unknown'
+    case 'single elimination':  return 'SingleElimination'
+    case 'double elimination':  return 'DouleElimination'
+    case 'round robin':         return 'League'
+    default:                    return 'Unknown'
   }
 }
 

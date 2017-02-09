@@ -1,7 +1,15 @@
 module.exports = `
+
+enum TournamentType {
+  SingleElimination
+  DouleElimination
+  League
+  Unknown
+}
+
 type Tournament {
   id: ID!
-  type: String!
+  type: TournamentType!
   name: String!
   progress: Int
   challongeURL: String
