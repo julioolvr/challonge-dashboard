@@ -36,11 +36,26 @@ const parseTournament = ({ tournament }) => {
 
   return {
     id: tournament.id,
+    type: convertTournamentType(tournament.tournament_type),
     name: tournament.name,
     progress: tournament.progress_meter,
     challongeURL: tournament.full_challonge_url,
     players,
     matches
+  }
+}
+
+const convertTournamentType = (type) => {
+  // Challonge types:
+  //    * single elimination
+  //    * double elimination
+  //    * round robin
+  //    * swiss
+  switch(type) {
+    case 'single elimination':  return 'SingleElimination'
+    case 'double elimination':  return 'DouleElimination'
+    case 'round robin':         return 'League'
+    default:                    return 'Unknown'
   }
 }
 
