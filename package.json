@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-preset-stage-0": "^6.22.0",
     "nodemon": "^1.11.0",
     "react-scripts": "0.8.4",
     "shipit": "^1.0.2",
@@ -28,8 +30,8 @@
     "react-tap-event-plugin": "^2.0.1"
   },
   "scripts": {
-    "start": "node server",
-    "serve": "nodemon server",
+    "start": "babel-node server",
+    "serve": "nodemon --exec babel-node server",
     "client:start": "react-scripts start",
     "client:build": "react-scripts build",
     "client:test": "react-scripts test --env=jsdom",
@@ -40,5 +42,10 @@
   "engineStrict": true,
   "engines": {
     "node": ">= 6.9.0"
+  },
+  "babel": {
+    "presets": [
+      "stage-0"
+    ]
   }
 }
